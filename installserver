@@ -4,7 +4,7 @@
 
 cd /root
 
-git clone https://github.com/joshbmarshall/serverchef
+git clone https://github.com/joshbmarshall/myservers /root/serverchef
 
 cd serverchef
 cp config.json.src config.json
