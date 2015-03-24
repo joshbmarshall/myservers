@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /root/serverchef
+git pull &>/tmp/cheflog && ./dochef.sh &>/tmp/cheflog || cat /tmp/cheflog

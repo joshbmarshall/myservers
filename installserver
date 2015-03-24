@@ -1,0 +1,18 @@
+#!/bin/bash
+
+[ -e "`which git`" ] || yum install -y git
+
+cd /root
+
+git clone https://github.com/joshbmarshall/serverchef
+
+cd serverchef
+cp config.json.src config.json
+
+echo ''
+echo 'Please edit /root/serverchef/config.json to suit this server and execute'
+echo ''
+echo '/root/serverchef/dochef.sh'
+echo ''
+echo 'You could use this command to copy and paste:'
+echo '   vi /root/serverchef/config.json; /root/serverchef/dochef.sh'

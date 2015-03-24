@@ -1,0 +1,12 @@
+config.json
+Berksfile.lock
+chef-client-running.pid
+chef-stacktrace.out
+solo.rb
+.chef
+/nbproject/
+gitlab-*.rpm
+remote_file
+.vagrant
+monit*
+vst-install*

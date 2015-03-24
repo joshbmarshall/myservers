@@ -1,0 +1,13 @@
+{
+  "run_list": [
+    "recipe[server]"
+  ],
+  "vesta": {
+    "admin_password": "changeme_password"
+  },
+  "set_fqdn": "changeme.fqdn",
+  "install_postfix": true,
+  "install_zbackup": true,
+  "install_vestacp": false,
+  "install_vestacp-php55": true
+}
