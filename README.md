@@ -8,7 +8,7 @@ To install a new server, please follow these instructions
 
 Download the `installserver` file from this project to the /root folder
 
-	wget -P /root https://github.com/joshbmarshall/serverchef/raw/master/installserver 
+	wget -P /root https://raw.githubusercontent.com/joshbmarshall/myservers/master/installserver
 	sh /root/installserver
 
 # Configure the chef parameters
