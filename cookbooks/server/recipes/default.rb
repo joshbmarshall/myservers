@@ -10,9 +10,9 @@
 node.default['is_backup_server'] = false
 node.default['monit']['config']['mail_servers'] = [
   {
-    "hostname" => "localhost",
-     "port" => 25,
-     "timeout" => "30 seconds",
+    "hostname" => "127.0.0.1",
+    "port" => 25,
+    "timeout" => "30 seconds",
   }
 ]
 node.default['monit']['config']['log_file'] = 'syslog facility log_daemon'
