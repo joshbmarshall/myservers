@@ -18,6 +18,10 @@ when  "redhat", "centos", "scientific", "amazon", "fedora"
   chkconfig_suffix = "on"
 end
 
+package "fail2ban" do
+  action [:remove]
+end
+
 execute "Download CSF" do
   cwd "/tmp/"
   command <<-EOH
