@@ -8,6 +8,13 @@
 #
 
 node.default['is_backup_server'] = false
+node.default['monit']['config']['mail_servers'] = [
+  {
+    "hostname" => "localhost",
+     "port" => 25,
+     "timeout" => "30 seconds",
+  }
+]
 node.default['monit']['config']['log_file'] = 'syslog facility log_daemon'
 node.default['monit']['config']['mail_from'] = 'alerts@sanchia.com.au'
 node.default['monit']['config']['subscribers'] = [
@@ -100,6 +107,9 @@ end
 if node["install_zbackup"] == true
   include_recipe 'zbackup'
 end
+
+# Screen
+package 'screen'
 
 if node["install_vestacp"] == true
   include_recipe 'vesta'
