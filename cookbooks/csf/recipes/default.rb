@@ -43,6 +43,11 @@ service "csf" do
   action :start
 end
 
+service "lfd" do
+  supports :restart => true, :start => true, :stop => true, :reload => true
+  action :start
+end
+
 execute "Update CSF" do
   cwd "/tmp/csf/"
   command "/usr/sbin/csf -u"
@@ -56,6 +61,7 @@ template "/etc/csf/csf.conf" do
   owner "root"
   group "root"
   notifies :restart, resources(:service => "csf"), :immediate
+  notifies :restart, resources(:service => "lfd"), :immediate
 end
 
 template "/etc/csf/csf.allow" do
@@ -66,7 +72,3 @@ template "/etc/csf/csf.allow" do
   notifies :restart, resources(:service => "csf"), :immediate
 end
 
-service "lfd" do
-  supports :status => true
-  action :start
-end
