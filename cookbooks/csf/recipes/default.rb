@@ -43,6 +43,11 @@ service "csf" do
   action :start
 end
 
+execute "Update CSF" do
+  cwd "/tmp/csf/"
+  command "/usr/sbin/csf -u"
+end
+
 # Create csf config files
 
 template "/etc/csf/csf.conf" do
