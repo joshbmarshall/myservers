@@ -7,6 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
+node.default['tz'] = 'Australia/Brisbane'
 node.default['is_backup_server'] = false
 node.default['monit']['config']['mail_servers'] = [
   {
@@ -106,6 +107,13 @@ end
 
 if node["install_zbackup"] == true
   include_recipe 'zbackup'
+end
+
+# Timezone
+
+bash 'Set Timezone' do
+  user 'root'
+  code "touch /etc/localtime; rm /etc/localtime; cp /usr/share/zoneinfo/#{node['tz']} /etc/localtime"
 end
 
 # Screen
