@@ -1,0 +1,6 @@
+#!/bin/bash
+
+[ -e "/var/run/monit.pid" ] || /etc/init.d/monit restart
+
+[ -d "/proc/`cat /var/run/monit.pid`" ] || /etc/init.d/monit restart
+

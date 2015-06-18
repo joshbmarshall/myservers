@@ -55,6 +55,111 @@ include_recipe 'monit-ng'
 include_recipe 'monit-ng::install'
 include_recipe 'monit-ng::configure'
 
+monit_check 'crond' do
+  check_id '/var/run/crond.pid'
+  group 'system'
+  start '/etc/init.d/crond start'
+  stop '/etc/init.d/crond stop'
+  tests [
+    {
+      'condition' => '3 restarts within 5 cycles',
+      'action'    => 'alert',
+    },
+  ]
+end
+
+monit_check 'rsyslog' do
+  check_id '/var/run/syslogd.pid'
+  group 'system'
+  start '/etc/init.d/rsyslog start'
+  stop '/etc/init.d/rsyslog stop'
+  tests [
+    {
+      'condition' => '3 restarts within 5 cycles',
+      'action'    => 'alert',
+    },
+  ]
+end
+
+monit_check 'sshd' do
+  check_id '/var/run/sshd.pid'
+  group 'system'
+  start '/etc/init.d/sshd start'
+  stop '/etc/init.d/sshd stop'
+  tests [
+    {
+      'condition' => 'failed host localhost port 22 with proto ssh for 2 cycles',
+      'action'    => 'restart',
+    },
+    {
+      'condition' => '3 restarts within 10 cycles',
+      'action'    => 'alert',
+    },
+  ]
+end
+
+monit_check 'system' do
+  check_type 'system'
+  name node['fqdn']
+  check_id 'check_id'
+  group 'system'
+  tests [
+    {
+      'condition' => 'loadavg (5min) > 30 for 8 cycles',
+      'action'    => 'alert',
+    },
+    {
+      'condition' => 'swap usage > 75% for 5 cycles',
+      'action'    => 'alert',
+    },
+    {
+      'condition' => 'cpu usage (user) > 70% for 5 cycles',
+      'action'    => 'alert',
+    },
+    {
+      'condition' => 'cpu usage (system) > 80% for 5 cycles',
+      'action'    => 'alert',
+    },
+    {
+      'condition' => 'cpu usage (wait) > 90% for 5 cycles',
+      'action'    => 'alert',
+    },
+  ]
+end
+
+monit_check 'rootfs' do
+  check_type 'filesystem'
+  check_id '/'
+  tests [
+    {
+      'condition' => 'space usage > 90%',
+      'action' => 'alert',
+    },
+    {
+      'condition' => 'inode usage > 90%',
+      'action' => 'alert',
+    },
+    {
+      'condition' => 'changed fsflags',
+      'action' => 'alert',
+    },
+  ]
+end
+
+# Check monit
+
+template "/usr/bin/checkmonit" do
+  source "usr_bin_checkmonit.erb"
+  mode 0700
+  owner "root"
+  group "root"
+end
+
+cron "checkmonit" do
+  minute '*/10'
+  command "/usr/bin/checkmonit"
+end
+
 if node["install_postfix"] == true
   # Postfix
   include_recipe 'postfix'
