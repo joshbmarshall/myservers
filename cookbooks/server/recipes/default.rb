@@ -52,8 +52,8 @@ include_recipe 'csf'
 
 # Monit
 include_recipe 'monit-ng'
-include_recipe 'monit-ng::source'
-include_recipe 'monit-ng::config'
+include_recipe 'monit-ng::install'
+include_recipe 'monit-ng::configure'
 
 if node["install_postfix"] == true
   # Postfix
