@@ -1638,6 +1638,21 @@ PT_LOAD_ACTION = ""
 # sensible starting point on most servers might be 250
 PT_FORKBOMB = "0"
 
+# Terminate hung SSHD sessions. When under an SSHD login attack, SSHD processes
+# are often left hung after their connecting IP addresses have been blocked
+#
+# This option will terminate all processes with the cmdline of "sshd: unknown
+# [net]" or "sshd: unknown [priv]" if they have been running for more than 60
+# seconds
+#
+# Note: It is possible that enabling this option may have adverse effects on
+# valid SSHD processes. If this is the case, this option should be disabled
+#
+# Note: Due to the nature of this type of attack, no email reports are sent
+# when the processes are terminated, however the event is logged in lfd.log
+# with a line prefix of "*PT_SSHDHUNG*"
+PT_SSHDHUNG = "0"
+
 ###############################################################################
 # SECTION:Port Scan Tracking
 ###############################################################################
