@@ -177,17 +177,22 @@ ICMP_OUT_RATE = "0"
 #
 # Supported:
 # Temporary ACCEPT/DENY, GLOBAL_DENY, GLOBAL_ALLOW, SMTP_BLOCK, LF_PERMBLOCK,
-# PACKET_FILTER, WATCH_MODE, Advanced Allow/Deny Filters, RELAY_*, CLUSTER_*
+# PACKET_FILTER, WATCH_MODE, Advanced Allow/Deny Filters, RELAY_*, CLUSTER_*,
+# CC6_LOOKUPS, SYNFLOOD, LF_NETBLOCK
+#
+# Supported if CC6_LOOKUPS and CC_LOOKUPS are enabled
+# CC_DENY, CC_ALLOW, CC_ALLOW_FILTER, CC_IGNORE, CC_ALLOW_PORTS, CC_DENY_PORTS,
+# CC_ALLOW_SMTPAUTH
+#
+# Supported if ip6tables >= 1.4.3:
+# PORTFLOOD, CONNLIMIT
+#
+# Supported if ip6tables >= 1.4.17 and perl module IO::Socket::INET6 is
+# installed:
+# MESSENGER
 #
 # Not supported:
-# CC_DENY, CC_ALLOW, CC_ALLOW_FILTER, SYNFLOOD, PORTFLOOD,
-# ICMP_IN, ICMP_OUT, LF_NETBLOCK, MESSENGER, CC_IGNORE, CONNLIMIT,
-# CC_ALLOW_PORTS, CC_DENY_PORTS
-#
-# Partially supported:
-# CC_LOOKUPS - reverse DNS only and requires the perl module Socket6 from cpan
-#
-# MESSENGER service - not supported: no REDIRECT support in ip6tables as yet
+# ICMP_IN, ICMP_OUT
 #
 IPV6 = "1"
 
@@ -340,9 +345,8 @@ FASTSTART = "0"
 # CC_* and /etc/csf/csf.blocklist, /etc/csf/csf.allow, /etc/csf/csf.deny,
 # GLOBAL_DENY, GLOBAL_ALLOW, DYNDNS, GLOBAL_DYNDNS, MESSENGER
 #
-# ipset will only be used with the above options when listing IPv4 IPs and
-# CIDRs. IPv6 IPs, Advanced Allow Filters and temporary blocks use traditional
-# iptables
+# ipset will only be used with the above options when listing IPs and CIDRs.
+# Advanced Allow Filters and temporary blocks use traditional iptables
 #
 # Using ipset moves the onus of ip matching against large lists away from
 # iptables rules and to a purpose built and optimised database matching
@@ -702,6 +706,13 @@ LF_NETBLOCK_COUNT = "4"
 LF_NETBLOCK_CLASS = "C"
 LF_NETBLOCK_ALERT = "1"
 
+# Valid settings for LF_NETBLOCK_IPV6 are "/64", "/56", "/48", "/32" and "/24"
+# Great care should be taken with IPV6 netblock ranges due to the large number
+# of addresses involved
+#
+# To disable IPv6 netblocks set to ""
+LF_NETBLOCK_IPV6 = ""
+
 ###############################################################################
 # SECTION:Global Lists/DYNDNS/Blocklists
 ###############################################################################
@@ -728,8 +739,8 @@ SAFECHAINUPDATE = "0"
 # will be updated.
 #
 # If the FQDN has multiple A records then all of the IP addresses will be
-# processed. If IPV6 is enabled and the perl module Socket6 from cpan.org is
-# installed, then all IPv6 AAAA IP address records will also be allowed.
+# processed. If IPV6 is enabled, then all IPv6 AAAA IP address records will
+# also be allowed.
 # 
 # A setting of 600 would check for IP updates every 10 minutes. Set the value
 # to 0 to disable the feature
@@ -815,6 +826,8 @@ URLGET = "1"
 #
 # Specify the the two-letter ISO Country Code(s). The iptables rules are for
 # incoming connections only
+#
+# You should consider using LF_IPSET when using any of the following options
 #
 # WARNING: These lists are never 100% accurate and some ISP's (e.g. AOL) use
 # non-geographic IP address designations for their clients
@@ -915,6 +928,16 @@ CC_DROP_CIDR = ""
 # "2" - Reports: Country Code and Country and Region and City
 # "3" - Reports: Country Code and Country and Region and City and ASN
 CC_LOOKUPS = "1"
+
+# Display Country Code and Country for reported IPv6 addresses using the
+# MaxMind Country IPv6 Database
+#
+# "0" - disable
+# "1" - Reports: Country Code and Country
+#
+# This option must also be enabled to allow IPv6 support to CC_*, MESSENGER and
+# PORTFLOOD
+CC6_LOOKUPS = "0"
 
 # This option tells lfd how often to retrieve the Maxmind GeoLite Country
 # database for CC_ALLOW, CC_ALLOW_FILTER, CC_DENY, CC_IGNORE and CC_LOOKUPS (in
