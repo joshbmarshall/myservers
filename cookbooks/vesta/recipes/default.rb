@@ -110,7 +110,6 @@ end
 
 service "mysqld" do
   supports :restart => true, :reload => true, :start => true, :stop => true
-  action: nothing
 end
 
 template "/etc/my.cnf" do
