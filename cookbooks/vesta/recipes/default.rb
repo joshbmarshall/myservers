@@ -108,4 +108,17 @@ template "/etc/nginx/nginx.conf" do
   notifies :run, "execute[reloadproxy]"
 end
 
+service "mysqld" do
+  supports :restart => true, :reload => true, :start => true, :stop => true
+  action: nothing
+end
+
+template "/etc/my.cnf" do
+  source "etc_my.cnf.erb"
+  mode 0644
+  owner "root"
+  group "root"
+  notifies :restart, "service[mysqld]"
+end
+
 
