@@ -95,4 +95,17 @@ template "/etc/php.ini" do
   group "root"
 end
 
+execute "reloadproxy" do
+  command '/usr/local/vesta/bin/v-restart-proxy'
+  action :nothing
+end
+
+template "/etc/nginx/nginx.conf" do
+  source "etc_nginx_nginx.conf.erb"
+  mode 0644
+  owner "root"
+  group "root"
+  notifies :action, "execute[reloadproxy]"
+end
+
 
