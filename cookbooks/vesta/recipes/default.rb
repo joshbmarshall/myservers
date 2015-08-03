@@ -108,6 +108,14 @@ template "/etc/nginx/nginx.conf" do
   notifies :run, "execute[reloadproxy]"
 end
 
+template "/etc/ssl/certs/dhparam.pem" do
+  source "etc_ssl_certs_dhparam.pem.erb"
+  mode 0644
+  owner "root"
+  group "root"
+  notifies :run, "execute[reloadproxy]"
+end
+
 template "/usr/local/vesta/data/templates/web/nginx/default.stpl" do
   source "nginx_default.stpl.erb"
   mode 0644
