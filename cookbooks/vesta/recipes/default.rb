@@ -124,6 +124,13 @@ template "/usr/local/vesta/data/templates/web/nginx/default.stpl" do
   notifies :run, "execute[reloadproxy]"
 end
 
+template "/usr/local/vesta/func/main.sh" do
+  source "usr_local_vesta_func_main.sh.erb"
+  mode 0644
+  owner "root"
+  group "root"
+end
+
 service "mysqld" do
   supports :restart => true, :reload => true, :start => true, :stop => true
 end
