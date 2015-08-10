@@ -1,3 +1,4 @@
+Encoding.default_external = "UTF-8"
 source "https://supermarket.getchef.com"
 
 cookbook 'myusers', git: "https://github.com/joshbmarshall/myusers.git"
