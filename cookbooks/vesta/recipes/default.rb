@@ -95,6 +95,19 @@ template "/etc/php.ini" do
   group "root"
 end
 
+execute "reloadweb" do
+  command '/usr/local/vesta/bin/v-restart-web'
+  action :nothing
+end
+
+template "/etc/httpd/conf.d/php.conf" do
+  source "etc_httpd_conf.d_php.conf.erb"
+  mode 0644
+  owner "root"
+  group "root"
+  notifies :run, "execute[reloadweb]"
+end
+
 execute "reloadproxy" do
   command '/usr/local/vesta/bin/v-restart-proxy'
   action :nothing
