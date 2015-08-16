@@ -78,6 +78,7 @@ template "/etc/csf/csf.pignore" do
   owner "root"
   group "root"
   notifies :restart, resources(:service => "csf"), :immediate
+  notifies :restart, resources(:service => "lfd"), :immediate
 end
 
 template "/etc/csf/csf.blocklists" do
