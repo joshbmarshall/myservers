@@ -72,6 +72,14 @@ template "/etc/csf/csf.allow" do
   notifies :restart, resources(:service => "csf"), :immediate
 end
 
+template "/etc/csf/csf.pignore" do
+  source "csf.pignore.erb"
+  mode 0600
+  owner "root"
+  group "root"
+  notifies :restart, resources(:service => "csf"), :immediate
+end
+
 template "/etc/csf/csf.blocklists" do
   source "csf.blocklists.erb"
   mode 0600
