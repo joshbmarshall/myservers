@@ -1859,6 +1859,16 @@ UI = "0"
 # to the port using Advanced Allow Filters (see readme.txt)
 UI_PORT = "6666"
 
+# Optionally set the IP address to bind to. Normally this should be left blank
+# to bind to all IP addresses on the server.
+#
+# If the server is configured for IPv6 but the IP to bind to is IPv4, then the
+# IP address MUST use the IPv6 representation. For example 1.2.3.4 must use
+# ::ffff:1.2.3.4
+#
+# Leave blank to bind to all IP addresses on the server
+UI_IP = ""
+
 # This should be a secure, hard to guess username
 # 
 # This must be changed from the default
