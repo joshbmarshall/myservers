@@ -1,4 +1,4 @@
-default.packages = %w(vim git)
+default.packages = %w(vim git at)
 
 default.set_fqdn = 'server.fqdn'
 
